@@ -38,10 +38,34 @@ int main()
 
 void mystery_sort(int * arr, int lo, int hi)
 {
+  if (lo >= hi)
+    return;
 
+  int pivot = arr[lo];
+  int lo_index = lo + 1;
+  int hi_index = hi;
+  int temp;
 
+  while (lo_index < hi_index) {
+    while (arr[lo_index] <= pivot && lo_index < hi_index)
+      ++lo_index;
+    while (arr[hi_index] >= pivot && lo_index < hi_index)
+      --hi_index;
+    if (lo_index == hi_index)
+      break;
+    temp = arr[lo_index];
+    arr[lo_index++] = arr[hi_index];
+    arr[hi_index--] = temp;
+  }
 
+  if (arr[hi_index] >= pivot)
+    --hi_index;
 
+  arr[lo] = arr[hi_index];
+  arr[hi_index] = pivot;
+
+  mystery_sort(arr, lo, hi_index - 1);
+  mystery_sort(arr, hi_index + 1, hi);
 }
 
 
